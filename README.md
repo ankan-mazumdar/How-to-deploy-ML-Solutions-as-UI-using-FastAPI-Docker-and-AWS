@@ -181,4 +181,8 @@ Then for all traffic  network permission , go to Tasks-> network and  configurat
 
 ![image](https://github.com/user-attachments/assets/0975abdd-665f-4278-a3d8-3fdfb942da0c)
 
+![image](https://github.com/user-attachments/assets/23e9e3c4-34e5-4f4d-9409-f06a73ed6267)
+
+
+![image](https://github.com/user-attachments/assets/aeacea9a-91cd-4e8e-a31f-aa91d83f10ad)
 
