@@ -2,21 +2,102 @@
 
 Lets walk through the steps of deploying a machine learning (ML) solution using FastAPI, Docker, and AWS Elastic Container Service (ECS). We will cover creating an API using FastAPI, containerizing the API with Docker, pushing the Docker image to Docker Hub, and finally deploying the container on AWS.
 
-Prerequisites
+## Prerequisites
 Before you start, ensure you have the following installed:
 
 Python 3.10+
 Docker
 AWS CLI configured with your credentials
 Docker Hub account
-1. Creating the FastAPI Search API
+### 1. Creating the FastAPI Search API
 1.1 Setting Up the Project
 First, create a directory for your project and initialize a Python environment:
 
-bash
+```bash
 Copy code
 mkdir fastapi-ml-deploy
 cd fastapi-ml-deploy
 python3 -m venv venv
-source venv/bin/activate
-1.2 Writing the API Code
+source venv/bin/activate```
+
+### 1.2 Writing the API Code
+Create a file named main.py inside an app directory. This file will define the FastAPI application:
+
+### 1.3 Running the API Locally
+To test the API locally, run:
+```
+bash
+Copy code
+uvicorn app.main:app --reload```
+
+Visit http://127.0.0.1:8000/seacrh &  http://127.0.0.1:8000/info to interact with the API in the test notebook.
+
+## 2. Containerizing the API with Docker
+### 2.1 Creating a Dockerfile
+In the root of your project, create a Dockerfile:
+
+Dockerfile
+Copy code
+FROM python:3.10-slim
+
+WORKDIR /code
+
+COPY requirements.txt /code/
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./app /code/app
+
+```CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+```
+
+### 2.2 Building and Running the Docker Image
+
+Build the Docker image:
+```
+bash
+Copy code
+docker build -t yt-search-api .
+```
+Run the container:
+
+```bash
+Copy code
+docker run -d --name yt-search-container -p 8080:80 yt-search-api
+Visit http://localhost:8080/docs to access the API running in Docker.
+```
+
+## 3. Pushing the Docker Image to Docker Hub
+### 3.1 Tagging the Docker Image
+
+Tag the image to match your Docker Hub repository:
+
+```bash
+Copy code
+docker tag yt-search-api your-dockerhub-username/yt-search-api:latest
+```
+
+### 3.2 Pushing the Image
+Push the image to Docker Hub:
+
+```bash
+Copy code
+docker push your-dockerhub-username/yt-search-api:latest
+```
+
+## 4. Deploying to AWS Elastic Container Service (ECS)
+### 4.1 Setting Up AWS ECS
+Go to the AWS Management Console and open ECS. Create a new task definition, and choose the Fargate launch type.
+
+### 4.2 Configuring the Task Definition
+Select the container name and paste the Docker image URL from Docker Hub.
+Set the CPU and memory requirements based on your needs.
+
+### 4.3 Creating and Running the Service
+Create a new cluster and service to run the container. Once deployed, you can access your API through the public IP provided by AWS ECS.
+
+
+
+
+
+
+
