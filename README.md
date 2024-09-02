@@ -1,4 +1,4 @@
-#Docker, and AWS
+# Deploying ML Solutions with FastAPI, Docker, and AWS
 
 Lets walk through the steps of deploying a machine learning (ML) solution using FastAPI, Docker, and AWS Elastic Container Service (ECS). We will cover creating an API using FastAPI, containerizing the API with Docker, pushing the Docker image to Docker Hub, and finally deploying the container on AWS.
 
