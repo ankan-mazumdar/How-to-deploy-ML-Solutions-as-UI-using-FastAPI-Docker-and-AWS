@@ -17,11 +17,12 @@ Docker Hub account
 First, create a directory for your project and initialize a Python environment:
 
 ```bash
-Copy code
+
 mkdir fastapi-ml-deploy
 cd fastapi-ml-deploy
 python3 -m venv venv
-source venv/bin/activate```
+source venv/bin/activate
+```
 
 ## `main.py`
 
