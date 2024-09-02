@@ -7,8 +7,11 @@ Before you start, ensure you have the following installed:
 
 Python 3.10+
 Docker
+
 AWS CLI configured with your credentials
+
 Docker Hub account
+
 ### 1. Creating the FastAPI Search API
 1.1 Setting Up the Project
 First, create a directory for your project and initialize a Python environment:
@@ -20,8 +23,41 @@ cd fastapi-ml-deploy
 python3 -m venv venv
 source venv/bin/activate```
 
-### 1.2 Writing the API Code
-Create a file named main.py inside an app directory. This file will define the FastAPI application:
+## `main.py`
+
+The `main.py` file is the core of your FastAPI application, which serves as the interface for your machine learning model to interact with the outside world through API endpoints.
+
+### Key Components:
+- **Imports**:
+  - Utilizes libraries like `FastAPI` for building the API, `polars` for data processing, and `SentenceTransformer` for sentence embeddings.
+  - Also imports the `returnSearchResultIndexes` helper function from `functions.py`.
+
+- **Model and Data Setup**:
+  - Loads a pre-trained Sentence Transformer model (`all-MiniLM-L6-v2`) from a local path.
+  - Loads the video index as a Polars DataFrame from a Parquet file (`video-index.parquet`).
+
+- **API Endpoints**:
+  - **Health Check** (`GET /`): Returns a status message to confirm the API is running.
+  - **Info** (`GET /info`): Provides basic information about the API, including its name and description.
+  - **Search** (`GET /search?query=...`): Accepts a search query as input, runs the query through the model to find relevant YouTube videos, and returns the top search results as a dictionary.
+
+## `functions.py`
+
+The `functions.py` file contains the logic for processing the search queries and retrieving relevant results.
+
+### Key Components:
+- **Imports**:
+  - Uses `numpy` for numerical operations, `polars` for data manipulation, `SentenceTransformer` for embedding the query, and `pairwise_distances` from `sklearn` to calculate distances between the query and video data.
+
+- **`returnSearchResultIndexes` Function**:
+  - **Purpose**: Returns the indexes of the top search results based on the user's query.
+  - **Steps**:
+    - **Embedding the Query**: Converts the query string into a numerical embedding using the `SentenceTransformer`.
+    - **Calculating Distances**: Computes the Manhattan distance between the query embedding and the embeddings of the video titles/transcripts.
+    - **Filtering Results**: Selects videos within a certain distance (`threshold`) and sorts these by proximity, then selects the top `k` closest matches.
+    - **Returning Results**: Outputs the indexes of the top matching search results.
+
+
 
 ### 1.3 Running the API Locally
 To test the API locally, run:
