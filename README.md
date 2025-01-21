@@ -70,9 +70,8 @@ The `functions.py` file contains the logic for processing the search queries and
 ### 1.3 Running the API Locally
 To test the API locally, run:
 
-```
-bash
-Copy code
+```bash
+
 uvicorn app.main:app --reload
 ```
 
