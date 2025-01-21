@@ -69,10 +69,12 @@ The `functions.py` file contains the logic for processing the search queries and
 
 ### 1.3 Running the API Locally
 To test the API locally, run:
+
 ```
 bash
 Copy code
-uvicorn app.main:app --reload```
+uvicorn app.main:app --reload
+```
 
 Visit http://127.0.0.1:8000/seacrh &  http://127.0.0.1:8000/info to interact with the API in the test notebook.
 ![image](https://github.com/user-attachments/assets/9ee3ec9b-a3ae-4487-b34b-aa123ed0bdd2)
